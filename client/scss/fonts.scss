@@ -1,0 +1,7 @@
+$sans-serif-stack: 'Open Sans', Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+@mixin main-font($font-size: 15px, $font-weight: 400) {
+    font-size: $font-size;
+    font-family: $sans-serif-stack;
+    font-weight: $font-weight;
+}
