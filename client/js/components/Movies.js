@@ -18,6 +18,7 @@ class Movies extends React.Component {
 
 
     componentDidMount() {
+        console.log(this.props.firebase.database())
         this.props.onLoad();
         this.props.firebase.login({
             email: 'fluffykins@fluffy.com',
