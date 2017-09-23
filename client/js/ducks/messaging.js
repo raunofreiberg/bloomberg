@@ -1,9 +1,12 @@
 import {combineReducers} from 'redux';
 import firebase from '../config';
+import history from '../history';
 
 // action types
 const SET_MESSAGES = 'SET_MESSAGES';
 const SET_LOADING = 'SET_LOADING';
+const SET_USER = 'SET_USER';
+const SET_AUTORHIZED = 'SET_AUTHORIZED';
 
 const initialState = {
     isLoading: true,
@@ -33,7 +36,7 @@ const isLoading = (state = initialState.isLoading, action) => {
 
 const user = (state = initialState.user, action) => {
     switch (action.type) {
-        case 'SET_USER':
+        case SET_USER:
             return action.user;
         default:
             return state;
@@ -42,7 +45,7 @@ const user = (state = initialState.user, action) => {
 
 const isAuthorized = (state = initialState.isAuthorized, action) => {
     switch (action.type) {
-        case 'SET_AUTHORIZED':
+        case SET_AUTORHIZED:
             return action.status;
         default:
             return state;
@@ -60,16 +63,14 @@ const rootReducer = combineReducers({
 const setError = (statusCode, message) => ({type: 'SET_ERROR', statusCode, message});
 const setLoading = status => ({type: SET_LOADING, status});
 const setMessages = messagesList => ({type: SET_MESSAGES, messagesList});
-const setUser = user => ({type: 'SET_USER', user});
-const setAuthorized = status => ({type: 'SET_AUTHORIZED', status});
+const setUser = user => ({type: SET_USER, user});
+const setAuthorized = status => ({type: SET_AUTORHIZED, status});
 
 // action creators
-export const fetchMessages = () => async (dispatch, getState) => {
+export const fetchMessages = () => async (dispatch) => {
     dispatch(setLoading(true));
 
     try {
-        await firebase.auth()
-            .signInAnonymously();
         await firebase.database()
             .ref('messages')
             .orderByKey()
@@ -78,17 +79,16 @@ export const fetchMessages = () => async (dispatch, getState) => {
                 dispatch(setLoading(false));
             });
     } catch (err) {
-        console.log(err);
+        console.log(err); // todo: error handling
     }
 };
 
 
-export const sendMessage = (message, user) => async () => {
+export const sendMessage = (message) => async () => {
     try {
         const msg = {
             message,
-            userId: user.id,
-            username: user.name,
+            user: firebase.auth().currentUser.email,
         };
 
         const msgRef = await
@@ -101,40 +101,31 @@ export const sendMessage = (message, user) => async () => {
 
         fetchMessages();
     } catch (err) {
-        console.log(err);
+        console.log(err); // todo: error handling
     }
 };
 
-export const authorizeUser = () => (dispatch) => {
-    const locallyStoredUser = JSON.parse(localStorage.getItem('user'));
-
-    if (locallyStoredUser) {
-        // TODO: add check against the database with users' ID
-        dispatch(setUser(locallyStoredUser));
-        dispatch(setAuthorized(true));
-    }
-};
-
-export const createUser = name => async (dispatch) => {
+export const createUser = (username, password) => async (dispatch) => {
     try {
-        const user = {
-            name,
-        };
-
-        const userRef = await
-            firebase.database()
-                .ref('users')
-                .push();
-
-        user.id = userRef.key;
-        userRef.set(user);
-        localStorage.setItem('user', JSON.stringify(user));
-
-        dispatch(setUser(user));
-        dispatch(setAuthorized(true));
-
+        await firebase
+            .auth()
+            .createUserWithEmailAndPassword(username, password);
+        history.push('/');
     } catch (err) {
-        console.log(err);
+        console.log(err); // todo: error handling
+    }
+
+};
+
+export const loginUser = (username, password) => async (dispatch) => {
+    try {
+        await firebase
+            .auth()
+            .signInWithEmailAndPassword(username, password);
+        dispatch(setAuthorized(true));
+    } catch (err) {
+        dispatch(setAuthorized(false));
+        console.log(err); // todo: error handling
     }
 };
 

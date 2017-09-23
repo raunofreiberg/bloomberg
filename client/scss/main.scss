@@ -4,5 +4,16 @@
 
 @import "atoms/icons";
 @import "atoms/buttons";
+@import "atoms/inputs";
 
 @import "molecules/table";
+
+@import "organisms/login";
+
+#react-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Circular Air";
+}

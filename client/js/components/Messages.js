@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import {fetchMessages, sendMessage, createUser, authorizeUser} from '../ducks/messaging';
+import {fetchMessages, sendMessage, loginUser} from '../ducks/messaging';
 
 class Messages extends React.Component {
     static propTypes = {
@@ -18,8 +19,7 @@ class Messages extends React.Component {
         isAuthorized: PropTypes.bool.isRequired,
         onFetch: PropTypes.func.isRequired,
         onSend: PropTypes.func.isRequired,
-        onCreate: PropTypes.func.isRequired,
-        onAuthorizeUser: PropTypes.func.isRequired,
+        onLogin: PropTypes.func.isRequired,
     };
 
     constructor(props) {
@@ -27,19 +27,23 @@ class Messages extends React.Component {
 
         this.state = {
             messageInputValue: '',
-            userName: 'Anonymous',
+            username: '',
+            password: '',
         };
     }
 
     componentDidMount() {
-        this.props.onAuthorizeUser();
         this.props.onFetch();
     }
 
     setMessageValue = e => this.setState({messageInputValue: e.target.value});
 
     setUsername = (e) => {
-        this.setState({userName: e.target.value});
+        this.setState({username: e.target.value});
+    };
+
+    setPassword = (e) => {
+        this.setState({password: e.target.value});
     };
 
     sendMessage = () => {
@@ -47,15 +51,18 @@ class Messages extends React.Component {
         this.setState({messageInputValue: ''});
     };
 
-    createUser = () => {
-        this.props.onCreate(this.state.userName);
+    login = () => {
+        this.props.onLogin(this.state.username, this.state.password);
     };
 
     renderLogin = () => {
         return (
             <div>
-                <input type="text" onChange={this.setUsername} />
-                <button onClick={() => this.createUser()}>Join</button>
+                <h1 className="index__heading">Login</h1>
+                <input type="text" placeholder="Email" onChange={this.setUsername} />
+                <input type="password" placeholder="Password" onChange={this.setPassword} />
+                <button className="btn btn--primary login" onClick={() => this.login()}>Login</button>
+                <Link to="/signup" className="btn btn-block btn--secondary">Sign up</Link>
             </div>
         );
     };
@@ -66,7 +73,7 @@ class Messages extends React.Component {
                 <h1>User: {this.props.user.name}</h1>
                 {
                     Object.keys(messages).map(key =>
-                        <li key={key}>{messages[key].message} - {messages[key].username}</li>
+                        <li key={key}>{messages[key].message} - {messages[key].user}</li>
                     )
                 }
 
@@ -79,7 +86,6 @@ class Messages extends React.Component {
     render() {
         return (
             <div>
-                best chatroom EU
                 {
                     !this.props.isLoading && this.props.isAuthorized ?
                         this.renderMessages(this.props.messages) : this.renderLogin()
@@ -99,8 +105,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onFetch: () => dispatch(fetchMessages()),
     onSend: (message, user) => dispatch(sendMessage(message, user)),
-    onCreate: name => dispatch(createUser(name)),
-    onAuthorizeUser: () => dispatch(authorizeUser()),
+    onLogin: (username, password) => dispatch(loginUser(username, password)),
 });
 
 const MessagesConnector = connect(
