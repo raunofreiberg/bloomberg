@@ -1,54 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {
-    firebaseConnect,
-    isLoaded,
-    isEmpty,
-    dataToJS
-} from 'react-redux-firebase';
 
-import {fetchMovies} from '../ducks/movies';
+import {fetchMovies, fetchTodos, addTodo} from '../ducks/movies';
 
-@firebaseConnect()
-@connect(({firebase}) => ({
-    todos: dataToJS(firebase, 'todos'),
-}))
 class Movies extends React.Component {
 
-
     componentDidMount() {
-        console.log(this.props.firebase.database())
         this.props.onLoad();
-        this.props.firebase.login({
-            email: 'fluffykins@fluffy.com',
-            password: 'poopfoobar',
-        });
-    };
+        this.props.onDoShit();
+    }
 
-    handleAdd = () => {
-        // const {newTodo} = this.refs;
-        const { firebase } = this.props;
-
-        firebase.push('/todos', {text: 'asd', done: false});
+    handleAdd = (first, last) => {
+        this.props.addTodo(first, last);
     };
 
     render() {
         return (
             <div>
                 wassup
-                <button onClick={this.handleAdd}>Add TODO</button>
+                <button onClick={() => this.handleAdd('suh', 'dude')}>Add TODO</button>
             </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    movies: state.movies.moviesList,
+    movies: state.movies,
+    todos: state.todos.todosList,
 });
 
 const mapDispatchToProps = dispatch => ({
     onLoad: () => dispatch(fetchMovies()),
+    onDoShit: () => dispatch(fetchTodos()),
+    addTodo: (first, last) => dispatch(addTodo(first, last)),
 });
 
 const MoviesConnector = connect(
