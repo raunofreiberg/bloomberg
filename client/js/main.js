@@ -3,7 +3,7 @@ import {createStore, applyMiddleware, compose} from 'redux';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 
-import rootReducer from './ducks/movies';
+import rootReducer from './ducks/messaging';
 import initApp from './App';
 
 const DEBUG = process.env.NODE_ENV !== 'production';

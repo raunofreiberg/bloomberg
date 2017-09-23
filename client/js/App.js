@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import '../scss/main.scss';
 
-import Movies from './components/Movies';
+import Movies from './components/Messages';
 
 export default function initApp(selector, store) {
     const container = document.getElementById('react-container');
