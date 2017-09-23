@@ -3,23 +3,16 @@ import firebase from '../config';
 
 const initialState = {
     isLoading: true,
-    messages: {},
+    messagesList: {},
 };
 
-const messages = (state = initialState.messages, action) => {
+const messages = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_MESSAGES':
             return {
                 ...state,
-                messages: action.messagesList,
+                messagesList: action.messagesList,
             };
-        default:
-            return state;
-    }
-};
-
-const isLoading = (state = initialState.isLoading, action) => {
-    switch (action.type) {
         case 'SET_LOADING':
             return {
                 ...state,
@@ -41,6 +34,7 @@ const setMessages = messagesList => ({type: 'SET_MESSAGES', messagesList});
 
 
 export const fetchMessages = () => async (dispatch) => {
+    dispatch(setLoading(true));
 
     try {
         await firebase.database()
@@ -48,6 +42,7 @@ export const fetchMessages = () => async (dispatch) => {
             .orderByKey()
             .on('value', (snapshot) => {
                 dispatch(setMessages(snapshot.val()));
+                dispatch(setLoading(false));
             });
     } catch (err) {
         console.log(err);

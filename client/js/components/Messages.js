@@ -1,10 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import { fetchMessages, sendMessage } from '../ducks/messaging';
+import {fetchMessages, sendMessage} from '../ducks/messaging';
 
 class Messages extends React.Component {
+    static propTypes = {
+        messagesList: PropTypes.shape({}).isRequired,
+        isLoading: PropTypes.bool.isRequired,
+        onLoad: PropTypes.func.isRequired,
+        onSend: PropTypes.func.isRequired,
+    };
+
     constructor(props) {
         super(props);
 
@@ -17,12 +24,13 @@ class Messages extends React.Component {
         this.props.onLoad();
     }
 
-    sendMessage = () => {
-        this.props.onSend(this.state.inputValue);
-    };
 
     setMessageValue = (e) => {
         this.setState({inputValue: e.target.value});
+    };
+
+    sendMessage = () => {
+        this.props.onSend(this.state.inputValue);
     };
 
     renderMessages = (messages) => {
@@ -37,16 +45,17 @@ class Messages extends React.Component {
         return (
             <div>
                 wassup
-                <input type="text" onChange={this.setMessageValue} />
+                <input type="text" onChange={this.setMessageValue}/>
                 <button onClick={() => this.sendMessage()}>Send message</button>
-                {this.props.messages.messages ? this.renderMessages(this.props.messages.messages) : ''}
+                {!this.props.isLoading ? this.renderMessages(this.props.messagesList) : ''}
             </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    messages: state.messages,
+    messagesList: state.messages.messagesList,
+    isLoading: state.messages.isLoading,
 });
 
 const mapDispatchToProps = dispatch => ({
