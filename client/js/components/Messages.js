@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { fetchMessages, sendMessage } from '../ducks/messaging';
 
-class Movies extends React.Component {
+class Messages extends React.Component {
     constructor(props) {
         super(props);
 
@@ -54,9 +54,9 @@ const mapDispatchToProps = dispatch => ({
     onSend: message => dispatch(sendMessage(message)),
 });
 
-const MoviesConnector = connect(
+const MessagesConnector = connect(
     mapStateToProps,
     mapDispatchToProps,
-)(Movies);
+)(Messages);
 
-export default MoviesConnector;
+export default MessagesConnector;
