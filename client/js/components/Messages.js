@@ -6,7 +6,10 @@ import {fetchMessages, sendMessage} from '../ducks/messaging';
 
 class Messages extends React.Component {
     static propTypes = {
-        messagesList: PropTypes.shape({}).isRequired,
+        messagesList: PropTypes.shape({
+            message: PropTypes.string,
+            id: PropTypes.string,
+        }).isRequired,
         isLoading: PropTypes.bool.isRequired,
         onLoad: PropTypes.func.isRequired,
         onSend: PropTypes.func.isRequired,
