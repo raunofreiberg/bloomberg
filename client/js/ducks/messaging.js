@@ -105,7 +105,7 @@ export const sendMessage = (message, user) => async () => {
     }
 };
 
-export const tryAuthorizeUser = () => (dispatch) => {
+export const authorizeUser = () => (dispatch) => {
     const locallyStoredUser = JSON.parse(localStorage.getItem('user'));
 
     if (locallyStoredUser) {

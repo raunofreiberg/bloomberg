@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {fetchMessages, sendMessage, createUser, tryAuthorizeUser} from '../ducks/messaging';
+import {fetchMessages, sendMessage, createUser, authorizeUser} from '../ducks/messaging';
 
 class Messages extends React.Component {
     static propTypes = {
@@ -38,10 +38,13 @@ class Messages extends React.Component {
 
     setMessageValue = e => this.setState({messageInputValue: e.target.value});
 
-    setUsername = e => this.setState({userName: e.target.value});
+    setUsername = (e) => {
+        this.setState({userName: e.target.value});
+    };
 
     sendMessage = () => {
         this.props.onSend(this.state.messageInputValue, this.props.user);
+        this.setState({messageInputValue: ''});
     };
 
     createUser = () => {
@@ -51,7 +54,7 @@ class Messages extends React.Component {
     renderLogin = () => {
         return (
             <div>
-                <input type="text" onChange={this.setUsername}/>
+                <input type="text" onChange={this.setUsername} />
                 <button onClick={() => this.createUser()}>Join</button>
             </div>
         );
@@ -60,14 +63,14 @@ class Messages extends React.Component {
     renderMessages = (messages) => {
         return (
             <ul>
-                <h1>{this.props.user.name}</h1>
+                <h1>User: {this.props.user.name}</h1>
                 {
                     Object.keys(messages).map(key =>
                         <li key={key}>{messages[key].message} - {messages[key].username}</li>
                     )
                 }
 
-                <input type="text" onChange={this.setMessageValue}/>
+                <input type="text" onChange={this.setMessageValue} value={this.state.messageInputValue} />
                 <button onClick={() => this.sendMessage()}>Send message</button>
             </ul>
         );
@@ -76,7 +79,7 @@ class Messages extends React.Component {
     render() {
         return (
             <div>
-                wassup
+                best chatroom EU
                 {
                     !this.props.isLoading && this.props.isAuthorized ?
                         this.renderMessages(this.props.messages) : this.renderLogin()
@@ -97,7 +100,7 @@ const mapDispatchToProps = dispatch => ({
     onFetch: () => dispatch(fetchMessages()),
     onSend: (message, user) => dispatch(sendMessage(message, user)),
     onCreate: name => dispatch(createUser(name)),
-    onAuthorizeUser: () => dispatch(tryAuthorizeUser()),
+    onAuthorizeUser: () => dispatch(authorizeUser()),
 });
 
 const MessagesConnector = connect(
