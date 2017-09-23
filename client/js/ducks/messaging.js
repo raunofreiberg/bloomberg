@@ -1,23 +1,29 @@
 import { combineReducers } from 'redux';
 import firebase from '../config';
 
+// action types
+const SET_MESSAGES = 'SET_MESSAGES';
+const SET_LOADING = 'SET_LOADING';
+
 const initialState = {
     isLoading: true,
     messagesList: {},
 };
 
-const messages = (state = initialState, action) => {
+// reducers
+const messages = (state = initialState.messagesList, action) => {
     switch (action.type) {
-        case 'SET_MESSAGES':
-            return {
-                ...state,
-                messagesList: action.messagesList,
-            };
+        case SET_MESSAGES:
+            return action.messagesList;
+        default:
+            return state;
+    }
+};
+
+const isLoading = (state = initialState.isLoading, action) => {
+    switch (action.type) {
         case 'SET_LOADING':
-            return {
-                ...state,
-                isLoading: action.status,
-            };
+            return action.status;
         default:
             return state;
     }
@@ -25,14 +31,15 @@ const messages = (state = initialState, action) => {
 
 const rootReducer = combineReducers({
     messages,
+    isLoading,
 });
 
+// actions
+const setError = (statusCode, message) => ({ type: 'SET_ERROR', statusCode, message });
+const setLoading = status => ({ type: SET_LOADING, status });
+const setMessages = messagesList => ({ type: SET_MESSAGES, messagesList });
+
 // action creators
-const setError = (statusCode, message) => ({type: 'SET_ERROR', statusCode, message});
-const setLoading = status => ({type: 'SET_LOADING', status});
-const setMessages = messagesList => ({type: 'SET_MESSAGES', messagesList});
-
-
 export const fetchMessages = () => async (dispatch) => {
     dispatch(setLoading(true));
 

@@ -8,27 +8,28 @@ import initApp from './App';
 
 const DEBUG = process.env.NODE_ENV !== 'production';
 
-/* eslint-disable */
-const composeEnhancers =
-    typeof window === 'object' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+const createMessagingStore = (reducer) => {
+    /* eslint-disable */
+    const composeEnhancers =
+        typeof window === 'object' &&
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+            window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
 
-/* eslint-enable */
+    /* eslint-enable */
 
-const middleware = [
-    thunk,
-    createLogger(),
-];
+    const middleware = [];
 
-const enhancer = composeEnhancers(
-    applyMiddleware(...middleware),
-);
+    !DEBUG ? middleware.push(thunk) : middleware.push(thunk, createLogger());
 
-const store = createStore(
-    rootReducer,
-    enhancer,
-);
+    const enhancer = composeEnhancers(
+        applyMiddleware(...middleware),
+    );
+
+    return createStore(reducer, enhancer);
+};
+
+const store = createMessagingStore(rootReducer);
+
 
 function init() {
     initApp('react-container', store);

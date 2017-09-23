@@ -6,7 +6,7 @@ import {fetchMessages, sendMessage} from '../ducks/messaging';
 
 class Messages extends React.Component {
     static propTypes = {
-        messagesList: PropTypes.shape({
+        messages: PropTypes.shape({
             message: PropTypes.string,
             id: PropTypes.string,
         }).isRequired,
@@ -50,15 +50,15 @@ class Messages extends React.Component {
                 wassup
                 <input type="text" onChange={this.setMessageValue}/>
                 <button onClick={() => this.sendMessage()}>Send message</button>
-                {!this.props.isLoading ? this.renderMessages(this.props.messagesList) : ''}
+                {!this.props.isLoading ? this.renderMessages(this.props.messages) : ''}
             </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    messagesList: state.messages.messagesList,
-    isLoading: state.messages.isLoading,
+    messages: state.messages,
+    isLoading: state.isLoading,
 });
 
 const mapDispatchToProps = dispatch => ({
