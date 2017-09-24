@@ -67,22 +67,25 @@ const setUser = user => ({type: SET_USER, user});
 const setAuthorized = status => ({type: SET_AUTORHIZED, status});
 
 // action creators
-export const fetchMessages = () => async (dispatch) => {
+export const fetchMessages = () => async (dispatch, getState) => {
     dispatch(setLoading(true));
-
     try {
-        await firebase.database()
-            .ref('messages')
-            .orderByKey()
-            .on('value', (snapshot) => {
-                dispatch(setMessages(snapshot.val()));
-                dispatch(setLoading(false));
-            });
+        await firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                firebase.database()
+                    .ref('messages')
+                    .orderByKey()
+                    .on('value', (snapshot) => {
+                        dispatch(setMessages(snapshot.val()));
+                        dispatch(setLoading(false));
+                        dispatch(setAuthorized(true));
+                    });
+            }
+        });
     } catch (err) {
         console.log(err); // todo: error handling
     }
 };
-
 
 export const sendMessage = (message) => async () => {
     try {
@@ -110,6 +113,7 @@ export const createUser = (username, password) => async (dispatch) => {
         await firebase
             .auth()
             .createUserWithEmailAndPassword(username, password);
+        dispatch(setAuthorized(false));
         history.push('/');
     } catch (err) {
         console.log(err); // todo: error handling
@@ -125,6 +129,18 @@ export const loginUser = (username, password) => async (dispatch) => {
         dispatch(setAuthorized(true));
     } catch (err) {
         dispatch(setAuthorized(false));
+        console.log(err); // todo: error handling
+    }
+};
+
+export const logUserOut = () => async (dispatch) => {
+    try {
+        await firebase
+            .auth()
+            .signOut();
+        dispatch(setAuthorized(false));
+    } catch (err) {
+        dispatch(setAuthorized(true));
         console.log(err); // todo: error handling
     }
 };

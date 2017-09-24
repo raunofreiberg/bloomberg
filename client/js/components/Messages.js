@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
-import {fetchMessages, sendMessage, loginUser} from '../ducks/messaging';
+import {fetchMessages, sendMessage, loginUser, logUserOut} from '../ducks/messaging';
 
 class Messages extends React.Component {
     static propTypes = {
@@ -20,6 +20,7 @@ class Messages extends React.Component {
         onFetch: PropTypes.func.isRequired,
         onSend: PropTypes.func.isRequired,
         onLogin: PropTypes.func.isRequired,
+        onLogout: PropTypes.func.isRequired,
     };
 
     constructor(props) {
@@ -59,8 +60,8 @@ class Messages extends React.Component {
         return (
             <div>
                 <h1 className="index__heading">Login</h1>
-                <input type="text" placeholder="Email" onChange={this.setUsername} />
-                <input type="password" placeholder="Password" onChange={this.setPassword} />
+                <input type="text" placeholder="Email" onChange={this.setUsername}/>
+                <input type="password" placeholder="Password" onChange={this.setPassword}/>
                 <button className="btn btn--primary login" onClick={() => this.login()}>Login</button>
                 <Link to="/signup" className="btn btn-block btn--secondary">Sign up</Link>
             </div>
@@ -77,21 +78,33 @@ class Messages extends React.Component {
                     )
                 }
 
-                <input type="text" onChange={this.setMessageValue} value={this.state.messageInputValue} />
+                <input type="text" onChange={this.setMessageValue} value={this.state.messageInputValue}/>
                 <button onClick={() => this.sendMessage()}>Send message</button>
             </ul>
         );
     };
 
     render() {
-        return (
-            <div>
-                {
-                    !this.props.isLoading && this.props.isAuthorized ?
-                        this.renderMessages(this.props.messages) : this.renderLogin()
-                }
-            </div>
-        );
+        if (this.props.isLoading && this.props.isAuthorized) {
+            return (
+                <div>loading</div>
+            )
+        } else if (!this.props.isAuthorized && (this.props.isLoading || !this.props.isLoading)) {
+            return (
+                <div>
+                    {this.renderLogin()}
+                </div>
+            );
+        } else if (this.props.isAuthorized && !this.props.isLoading) {
+            return (
+                <div>
+                    <button onClick={() => this.props.onLogout()}>Log out</button>
+                    {this.renderMessages(this.props.messages)};
+                </div>
+            )
+        } else {
+            return null;
+        }
     }
 }
 
@@ -106,6 +119,7 @@ const mapDispatchToProps = dispatch => ({
     onFetch: () => dispatch(fetchMessages()),
     onSend: (message, user) => dispatch(sendMessage(message, user)),
     onLogin: (username, password) => dispatch(loginUser(username, password)),
+    onLogout: () => dispatch(logUserOut()),
 });
 
 const MessagesConnector = connect(
