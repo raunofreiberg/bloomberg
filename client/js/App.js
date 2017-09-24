@@ -19,7 +19,7 @@ export default function initApp(selector, store) {
     ReactDOM.render(
         <Provider store={store}>
             <Router history={history}>
-                <div className="main__container">
+                <div className="main__container container">
                     <Route exact path="/" component={Messages} />
                     <Route path="/signup" component={Signup} />
                 </div>

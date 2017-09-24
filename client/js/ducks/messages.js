@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import firebase from '../config';
 
-import {setAuthorized} from './user';
+import {setAuthorized, setUser} from './user';
 
 // action types
 const SET_MESSAGES = 'SET_MESSAGES';
@@ -48,6 +48,7 @@ export const fetchMessages = () => async (dispatch) => {
         await firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 dispatch(setAuthorized(true));
+                dispatch(setUser(firebase.auth().currentUser));
 
                 /*
                 we only want to setLoading for the UI once we actually
@@ -73,7 +74,8 @@ export const sendMessage = message => async () => {
     try {
         const msg = {
             message,
-            user: firebase.auth().currentUser.email,
+            username: firebase.auth().currentUser.displayName,
+            img: firebase.auth().currentUser.photoURL,
         };
 
         const msgRef = await
@@ -83,8 +85,6 @@ export const sendMessage = message => async () => {
 
         msg.id = msgRef.key;
         msgRef.set(msg);
-
-        fetchMessages();
     } catch (err) {
         console.log(err); // todo: error handling
     }

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
-import { createUser } from '../ducks/user';
+import {createUser} from '../ducks/user';
 
 class Signup extends React.Component {
     static propTypes = {
@@ -14,29 +14,41 @@ class Signup extends React.Component {
         super(props);
 
         this.state = {
+            email: '',
             username: '',
             password: '',
         };
     }
 
-    setUsername = (e) => {
-        this.setState({username: e.target.value});
+    setEmail = (e) => {
+        this.setState({ email: e.target.value });
     };
 
     setPassword = (e) => {
-        this.setState({password: e.target.value});
+        this.setState({ password: e.target.value });
+    };
+
+    setUsername = (e) => {
+        this.setState({ username: e.target.value });
     };
 
     createUser = () => {
-        this.props.onCreate(this.state.username, this.state.password);
+        const user = {
+            email: this.state.email,
+            username: this.state.username,
+            password: this.state.password,
+            img: 'http://lorempixel.com/100/100/',
+        };
+        this.props.onCreate(user);
     };
 
     render() {
         return (
             <div>
                 <h1 className="index__heading">Signup</h1>
-                <input type="text" placeholder="Email" onChange={this.setUsername} />
-                <input type="password" placeholder="Password" onChange={this.setPassword} />
+                <input type="text" placeholder="Email" onChange={this.setEmail}/>
+                <input type="text" placeholder="Display Name" onChange={this.setUsername}/>
+                <input type="password" placeholder="Password" onChange={this.setPassword}/>
                 <button className="btn btn--primary" onClick={() => this.createUser()}>Sign up</button>
                 <Link to="/" className="btn btn--secondary">Login</Link>
             </div>
@@ -49,7 +61,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onCreate: (username, password) => dispatch(createUser(username, password)),
+    onCreate: user => dispatch(createUser(user)),
 });
 
 const SignupConnector = connect(

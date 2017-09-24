@@ -1,0 +1,42 @@
+.messages__container {
+  max-height: 100vh;
+  overflow: scroll;
+
+  .message {
+    border-top: 1px solid #ddd;
+    padding: 16px;
+    animation: fadeIn 500ms ease-in-out;
+
+    &__content {
+      color: #8a8989;
+      letter-spacing: 0.025em;
+      margin-top: 16px;
+    }
+
+    .message__data {
+      width: 250px;
+
+      &-username {
+        font-weight: 600;
+        position: relative;
+        top: 4px;
+        margin-left: 8px;
+        font-size: 16px;
+      }
+    }
+    img {
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

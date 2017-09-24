@@ -70,17 +70,23 @@ class Messages extends React.Component {
 
     renderMessages = (messages) => {
         return (
-            <ul>
-                <h1>User: {this.props.user.email}</h1>
+            <div className="messages__container">
+                <h1>User: {this.props.user.displayName}</h1>
                 {
                     Object.keys(messages).map(key =>
-                        <li key={key}>{messages[key].message} - {messages[key].user}</li>
+                        <div className="message" key={key}>
+                            <div className="message__data">
+                                <img src={messages[key].img} />
+                                <span className="message__data-username">{messages[key].username}</span>
+                            </div>
+                            <p className="message__content">{messages[key].message}</p>
+                        </div>
                     )
                 }
 
                 <input type="text" onChange={this.setMessageValue} value={this.state.messageInputValue}/>
                 <button onClick={() => this.sendMessage()}>Send message</button>
-            </ul>
+            </div>
         );
     };
 
@@ -110,7 +116,7 @@ class Messages extends React.Component {
 
 const mapStateToProps = state => ({
     messages: state.messages.messages,
-    user: state.user,
+    user: state.user.user,
     isLoading: state.messages.isLoading,
     isAuthorized: state.user.isAuthorized,
 });
