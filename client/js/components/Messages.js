@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {fetchMessages, sendMessage, loginUser, logUserOut} from '../ducks/messaging';
+import {fetchMessages, sendMessage} from '../ducks/messages';
+import {loginUser, logUserOut} from "../ducks/user";
 
 class Messages extends React.Component {
     static propTypes = {
@@ -12,8 +13,7 @@ class Messages extends React.Component {
             id: PropTypes.string,
         }).isRequired,
         user: PropTypes.shape({
-            name: PropTypes.string,
-            id: PropTypes.string,
+            email: PropTypes.string,
         }).isRequired,
         isLoading: PropTypes.bool.isRequired,
         isAuthorized: PropTypes.bool.isRequired,
@@ -71,7 +71,7 @@ class Messages extends React.Component {
     renderMessages = (messages) => {
         return (
             <ul>
-                <h1>User: {this.props.user.name}</h1>
+                <h1>User: {this.props.user.email}</h1>
                 {
                     Object.keys(messages).map(key =>
                         <li key={key}>{messages[key].message} - {messages[key].user}</li>
@@ -88,20 +88,20 @@ class Messages extends React.Component {
         if (this.props.isLoading && this.props.isAuthorized) {
             return (
                 <div>loading</div>
-            )
-        } else if (!this.props.isAuthorized && (this.props.isLoading || !this.props.isLoading)) {
+            );
+        } else if (!this.props.isAuthorized && !this.props.isLoading) {
             return (
                 <div>
                     {this.renderLogin()}
                 </div>
             );
-        } else if (this.props.isAuthorized && !this.props.isLoading) {
+        } else if (this.props.isAuthorized) {
             return (
                 <div>
                     <button onClick={() => this.props.onLogout()}>Log out</button>
                     {this.renderMessages(this.props.messages)};
                 </div>
-            )
+            );
         } else {
             return null;
         }
@@ -109,10 +109,10 @@ class Messages extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    messages: state.messages,
+    messages: state.messages.messages,
     user: state.user,
-    isLoading: state.isLoading,
-    isAuthorized: state.isAuthorized,
+    isLoading: state.messages.isLoading,
+    isAuthorized: state.user.isAuthorized,
 });
 
 const mapDispatchToProps = dispatch => ({

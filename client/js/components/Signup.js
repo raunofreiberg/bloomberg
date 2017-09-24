@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { createUser } from '../ducks/messaging';
+import { createUser } from '../ducks/user';
 
 class Signup extends React.Component {
     static propTypes = {
