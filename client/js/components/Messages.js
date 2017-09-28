@@ -81,11 +81,13 @@ class Messages extends React.Component {
                 {
                     Object.keys(messages).map(key =>
                         messages[key].userId === this.props.user.uid ?
-                            <div className="messages messages--sent">
+                            <div className="messages messages--sent" key={key}>
                                 <div className="message">{messages[key].message}</div>
                             </div>
-                            : <div className="messages messages--received">
-                                <span className="messages--received__avatar">{messages[key].username ? messages[key].username.charAt(0) : '?'}</span>
+                            : <div className="messages messages--received" key={key}>
+                                <span className="messages--received__avatar">
+                                    {messages[key].username ? messages[key].username.charAt(0) : '?'}
+                                </span>
                                 <div className="message">{messages[key].message}</div>
                             </div>,
                     )
