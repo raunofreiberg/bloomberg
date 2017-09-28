@@ -1,0 +1,31 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 0;
+  height: 60px;
+  color: white;
+  font-size: 18px;
+  box-shadow: 0 0 45px 5px rgba(16, 16, 16, 0.47);
+  background: $color-black;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+
+  &-username {
+    flex: 0.5;
+    font-size: 16px;
+  }
+
+  &-app {
+    flex: 0.5;
+    font-size: 20px;
+  }
+
+  &-btn {
+    background: none;
+    border: none;
+  }
+}

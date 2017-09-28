@@ -37,7 +37,6 @@ class Signup extends React.Component {
             email: this.state.email,
             username: this.state.username,
             password: this.state.password,
-            img: 'http://lorempixel.com/100/100/',
         };
         this.props.onCreate(user);
     };
@@ -46,9 +45,9 @@ class Signup extends React.Component {
         return (
             <div>
                 <h1 className="index__heading">Signup</h1>
-                <input type="text" placeholder="Email" onChange={this.setEmail}/>
-                <input type="text" placeholder="Display Name" onChange={this.setUsername}/>
-                <input type="password" placeholder="Password" onChange={this.setPassword}/>
+                <input type="text" placeholder="Email" onChange={this.setEmail} className="input__field"/>
+                <input type="text" placeholder="Display Name" onChange={this.setUsername} className="input__field"/>
+                <input type="password" placeholder="Password" onChange={this.setPassword} className="input__field"/>
                 <button className="btn btn--primary" onClick={() => this.createUser()}>Sign up</button>
                 <Link to="/" className="btn btn--secondary">Login</Link>
             </div>

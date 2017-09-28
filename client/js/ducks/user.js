@@ -36,12 +36,12 @@ const userReducer = combineReducers({
 export const setUser = user => ({type: SET_USER, user});
 export const setAuthorized = status => ({type: SET_AUTHORIZED, status});
 
-export const createUser = userObj => async (dispatch) => {
+export const createUser = userObj => async () => {
     try {
         await firebase
             .auth()
             .createUserWithEmailAndPassword(userObj.email, userObj.password)
-            .then(user => user.updateProfile({ displayName: userObj.username, photoURL: userObj.img }));
+            .then(user => user.updateProfile({ displayName: userObj.username }));
         history.push('/');
 
     } catch (err) {

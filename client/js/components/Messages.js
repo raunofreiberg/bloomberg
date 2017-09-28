@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 import {fetchMessages, sendMessage} from '../ducks/messages';
-import {loginUser, logUserOut} from "../ducks/user";
+import {loginUser} from "../ducks/user";
 
 class Messages extends React.Component {
     static propTypes = {
@@ -14,13 +14,13 @@ class Messages extends React.Component {
         }).isRequired,
         user: PropTypes.shape({
             email: PropTypes.string,
+            displayName: PropTypes.string,
         }).isRequired,
         isLoading: PropTypes.bool.isRequired,
         isAuthorized: PropTypes.bool.isRequired,
         onFetch: PropTypes.func.isRequired,
         onSend: PropTypes.func.isRequired,
         onLogin: PropTypes.func.isRequired,
-        onLogout: PropTypes.func.isRequired,
     };
 
     constructor(props) {
@@ -47,7 +47,13 @@ class Messages extends React.Component {
         this.setState({password: e.target.value});
     };
 
-    sendMessage = () => {
+    scrollToBottom = () => {
+        const el = this.messagesEnd;
+        if (el) el.scrollIntoView();
+    };
+
+    sendMessage = (e) => {
+        e.preventDefault();
         this.props.onSend(this.state.messageInputValue, this.props.user);
         this.setState({messageInputValue: ''});
     };
@@ -60,32 +66,44 @@ class Messages extends React.Component {
         return (
             <div>
                 <h1 className="index__heading">Login</h1>
-                <input type="text" placeholder="Email" onChange={this.setUsername}/>
-                <input type="password" placeholder="Password" onChange={this.setPassword}/>
-                <button className="btn btn--primary login" onClick={() => this.login()}>Login</button>
+                <input type="text" placeholder="Email" className="input__field" onChange={this.setUsername} />
+                <input type="password" placeholder="Password" className="input__field" onChange={this.setPassword} />
+                <button className="btn btn--primary login" onClick={this.login}>Login</button>
                 <Link to="/signup" className="btn btn-block btn--secondary">Sign up</Link>
             </div>
         );
     };
 
     renderMessages = (messages) => {
+        this.scrollToBottom();
         return (
-            <div className="messages__container">
-                <h1>User: {this.props.user.displayName}</h1>
+            <div className="conversation">
                 {
                     Object.keys(messages).map(key =>
-                        <div className="message" key={key}>
-                            <div className="message__data">
-                                <img src={messages[key].img} />
-                                <span className="message__data-username">{messages[key].username}</span>
+                        messages[key].userId === this.props.user.uid ?
+                            <div className="messages messages--sent">
+                                <div className="message">{messages[key].message}</div>
                             </div>
-                            <p className="message__content">{messages[key].message}</p>
-                        </div>
+                            : <div className="messages messages--received">
+                                <span className="messages--received__avatar">{messages[key].username ? messages[key].username.charAt(0) : '?'}</span>
+                                <div className="message">{messages[key].message}</div>
+                            </div>,
                     )
                 }
-
-                <input type="text" onChange={this.setMessageValue} value={this.state.messageInputValue}/>
-                <button onClick={() => this.sendMessage()}>Send message</button>
+                <div ref={(el) => {this.messagesEnd = el;}} style={{marginTop: '70px'}}></div>
+                <form onSubmit={this.sendMessage} className="conversation__actions">
+                    <input
+                        type="text"
+                        onChange={this.setMessageValue}
+                        value={this.state.messageInputValue}
+                        className="conversation__actions-msg"
+                        placeholder="Type..."
+                    />
+                    {this.state.messageInputValue !== '' ?
+                        <button type="submit">
+                            <i className="icon icon--arrow"></i>
+                        </button> : ''}
+                </form>
             </div>
         );
     };
@@ -103,10 +121,7 @@ class Messages extends React.Component {
             );
         } else if (this.props.isAuthorized) {
             return (
-                <div>
-                    <button onClick={() => this.props.onLogout()}>Log out</button>
-                    {this.renderMessages(this.props.messages)};
-                </div>
+                this.renderMessages(this.props.messages)
             );
         } else {
             return null;
@@ -125,7 +140,6 @@ const mapDispatchToProps = dispatch => ({
     onFetch: () => dispatch(fetchMessages()),
     onSend: (message, user) => dispatch(sendMessage(message, user)),
     onLogin: (username, password) => dispatch(loginUser(username, password)),
-    onLogout: () => dispatch(logUserOut()),
 });
 
 const MessagesConnector = connect(

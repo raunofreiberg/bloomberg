@@ -25,7 +25,7 @@
   }
 
   &--primary {
-    background: #4967e2;
+    background: $color-blue;
 
     &:hover {
       box-shadow: 0 6px 17px rgba(86, 113, 228, 0.5);
@@ -34,7 +34,7 @@
   }
 
   &--secondary {
-    background: #272525;
+    background: $color-black;
   }
 
   &:focus {

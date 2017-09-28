@@ -72,10 +72,11 @@ export const fetchMessages = () => async (dispatch) => {
 
 export const sendMessage = message => async () => {
     try {
+        console.log(firebase.auth().currentUser)
         const msg = {
             message,
             username: firebase.auth().currentUser.displayName,
-            img: firebase.auth().currentUser.photoURL,
+            userId: firebase.auth().currentUser.uid,
         };
 
         const msgRef = await

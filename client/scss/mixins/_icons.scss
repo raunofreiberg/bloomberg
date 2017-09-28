@@ -1,0 +1,115 @@
+$icons-base-path: '../../static/icons/';
+$icons-prefix: 'icon--';
+
+@mixin icon($image, $width, $height) {
+    background-image: url($image);
+    background-size: contain;
+    width: $width + px;
+    height: $height + px;
+}
+
+$rotations: (
+    'up': 0,
+    'right': 90,
+    'down': 180,
+    'left': 270,
+);
+
+@mixin define-icon($name, $attrs) {
+    $width: map_get($attrs, 'width');
+    $height: $width;
+
+    @if map-has-key($attrs, 'height') {
+        $height: map_get($attrs, 'height');
+    }
+
+    @if map-has-key($attrs, 'rotation') {
+        $rot-base-name: map_get($attrs, 'rotation');
+        $rot-base: map_get($rotations, $rot-base-name);
+
+        @each $direction, $dir-value in $rotations {
+            $rotation: ($dir-value - $rot-base) + deg;
+
+            &.icon--#{$name}--#{$direction} {
+                @include icon('#{$icons-base-path}#{$icons-prefix}#{$name}--#{$rot-base-name}.svg', $width, $height);
+
+                transform: rotate($rotation);
+            }
+        }
+    }
+
+    @else {
+        &.icon--#{$name} {
+            @include icon('#{$icons-base-path}#{$icons-prefix}#{$name}.svg', $width, $height);
+        }
+    }
+}
+
+@mixin define-icon-multiple($icons, $attrs) {
+    @each $sub-icon in $icons {
+        @include define-icon($sub-icon, $attrs);
+    }
+}
+
+@mixin define-icons($icons-definitions) {
+    @each $icon, $val in $icons-definitions {
+        $key-type: type-of($icon);
+
+        @if $key-type == string {
+            @include define-icon($icon, $val);
+        }
+
+        @else if $key-type == list {
+            @include define-icon-multiple($icon, $val);
+        }
+    }
+}
+
+%button-icon-base {
+    transition: 200ms;
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    margin: 0 10px;
+}
+
+@mixin button-icon-base($image, $width, $height) {
+    position: relative;
+
+    &::before {
+        @extend %button-icon-base;
+
+        @include icon($image, $width, $height);
+    }
+}
+
+@mixin button-icon($image, $hover-image, $width, $height) {
+    position: relative;
+
+    &::before {
+        @extend %button-icon-base;
+
+        @include icon($image, $width, $height);
+    }
+
+    &::after {
+        @extend %button-icon-base;
+
+        @include icon($hover-image, $width, $height);
+
+        position: absolute;
+        left: 0;
+        opacity: 0;
+    }
+
+    &:hover {
+        &::before {
+            opacity: 0;
+        }
+
+        &::after {
+            opacity: 1;
+        }
+    }
+}

@@ -5,6 +5,7 @@
 @import "atoms/icons";
 @import "atoms/buttons";
 @import "atoms/inputs";
+@import "atoms/navbar";
 
 @import "molecules/table";
 
@@ -12,9 +13,11 @@
 @import "organisms/messages";
 
 #react-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
   font-family: "Circular Air";
+}
+
+button {
+  background: none;
+  border: 0;
 }
