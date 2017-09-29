@@ -5,9 +5,6 @@ import {connect} from 'react-redux';
 import {fetchMessages} from '../ducks/messages';
 import {logUserOut} from "../ducks/user";
 
-const LogoutBtn = () => (
-    <button className="navbar-btn" onClick={() => this.props.onLogout()}>Log out</button>
-);
 
 class Navbar extends React.Component {
 
@@ -20,7 +17,10 @@ class Navbar extends React.Component {
             <nav className="navbar navbar-default">
                 <span className="navbar-username">{this.props.user.displayName}</span>
                 <span className="navbar-app">Bloomfield</span>
-                {this.props.isAuthorized ? <LogoutBtn /> : ''}
+                {this.props.isAuthorized ?
+                    <button className="navbar-btn" onClick={() => this.props.onLogout()}>Log out</button>
+                    : ''
+                }
             </nav>
         );
     }
