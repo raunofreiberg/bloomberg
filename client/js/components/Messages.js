@@ -15,6 +15,7 @@ class Messages extends React.Component {
         user: PropTypes.shape({
             email: PropTypes.string,
             displayName: PropTypes.string,
+            uid: PropTypes.string,
         }).isRequired,
         isLoading: PropTypes.bool.isRequired,
         isAuthorized: PropTypes.bool.isRequired,
@@ -79,7 +80,7 @@ class Messages extends React.Component {
         return (
             <div className="conversation">
                 {
-                    Object.keys(messages).map(key =>
+                    Object.keys(messages).map(key => (
                         messages[key].userId === this.props.user.uid ?
                             <div className="messages messages--sent" key={key}>
                                 <div className="message">{messages[key].message}</div>
@@ -89,8 +90,8 @@ class Messages extends React.Component {
                                     {messages[key].username ? messages[key].username.charAt(0) : '?'}
                                 </span>
                                 <div className="message">{messages[key].message}</div>
-                            </div>,
-                    )
+                            </div>
+                    ))
                 }
                 <div ref={(el) => {this.messagesEnd = el;}} style={{marginTop: '70px'}}></div>
                 <form onSubmit={this.sendMessage} className="conversation__actions">
