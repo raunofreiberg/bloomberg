@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 import {fetchMessages, sendMessage} from '../ducks/messages';
-import {loginUser} from "../ducks/user";
+import {loginUser} from '../ducks/user';
 
 class Messages extends React.Component {
     static propTypes = {
