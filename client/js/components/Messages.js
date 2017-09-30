@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import {fetchMessages, sendMessage} from '../ducks/messages';
-import {loginUser} from '../ducks/user';
+import { fetchMessages, sendMessage } from '../ducks/messages';
+import { loginUser } from '../ducks/user';
 
 class Messages extends React.Component {
     static propTypes = {
@@ -38,15 +38,9 @@ class Messages extends React.Component {
         this.props.onFetch();
     }
 
-    setMessageValue = e => this.setState({messageInputValue: e.target.value});
-
-    setUsername = (e) => {
-        this.setState({username: e.target.value});
-    };
-
-    setPassword = (e) => {
-        this.setState({password: e.target.value});
-    };
+    setUsername = e => this.setState({ username: e.target.value });
+    setPassword = e => this.setState({ password: e.target.value });
+    setMessageValue = e => this.setState({ messageInputValue: e.target.value });
 
     scrollToBottom = () => {
         const el = this.messagesEnd;

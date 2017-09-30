@@ -38,9 +38,9 @@ const messagesReducer = combineReducers({
 });
 
 // actions
-const setError = (statusCode, message) => ({type: 'SET_ERROR', statusCode, message});
-const setLoading = status => ({type: SET_LOADING, status});
-const setMessages = messagesList => ({type: SET_MESSAGES, messagesList});
+const setError = (statusCode, message) => ({ type: 'SET_ERROR', statusCode, message });
+const setLoading = status => ({ type: SET_LOADING, status });
+const setMessages = messagesList => ({ type: SET_MESSAGES, messagesList });
 
 // action creators
 export const fetchMessages = () => async (dispatch) => {
@@ -72,7 +72,6 @@ export const fetchMessages = () => async (dispatch) => {
 
 export const sendMessage = message => async () => {
     try {
-        console.log(firebase.auth().currentUser)
         const msg = {
             message,
             username: firebase.auth().currentUser.displayName,

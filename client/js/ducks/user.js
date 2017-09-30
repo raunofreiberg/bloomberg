@@ -33,8 +33,8 @@ const userReducer = combineReducers({
     isAuthorized,
 });
 
-export const setUser = user => ({type: SET_USER, user});
-export const setAuthorized = status => ({type: SET_AUTHORIZED, status});
+export const setUser = user => ({ type: SET_USER, user });
+export const setAuthorized = status => ({ type: SET_AUTHORIZED, status });
 
 export const createUser = userObj => async () => {
     try {
