@@ -27,6 +27,14 @@
 .messages {
   margin-bottom: 20px;
 
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+  }
+
   &:first-of-type {
     margin-top: 88px;
   }
@@ -51,7 +59,6 @@
       border-bottom-left-radius: 5px;
       border-top-left-radius: 5px;
     }
-
 
     &__avatar {
       border-radius: 50%;
