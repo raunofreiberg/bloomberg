@@ -15,7 +15,7 @@ class Navbar extends React.Component {
     render() {
         return (
             <nav className="navbar navbar-default">
-                <span className="navbar-username">{this.props.user.displayName}</span>
+                {this.props.isAuthorized ? <span className="navbar-username">{this.props.user.displayName}</span> : ''}
                 <span className="navbar-app">Bloomfield</span>
                 {this.props.isAuthorized ?
                     <button className="navbar-btn" onClick={() => this.props.onLogout()}>Log out</button>

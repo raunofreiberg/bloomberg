@@ -9,10 +9,10 @@ $icons-prefix: 'icon--';
 }
 
 $rotations: (
-    'up': 0,
-    'right': 90,
-    'down': 180,
-    'left': 270,
+        'up': 0,
+        'right': 90,
+        'down': 180,
+        'left': 270,
 );
 
 @mixin define-icon($name, $attrs) {
@@ -36,9 +36,7 @@ $rotations: (
                 transform: rotate($rotation);
             }
         }
-    }
-
-    @else {
+    } @else {
         &.icon--#{$name} {
             @include icon('#{$icons-base-path}#{$icons-prefix}#{$name}.svg', $width, $height);
         }
@@ -57,9 +55,7 @@ $rotations: (
 
         @if $key-type == string {
             @include define-icon($icon, $val);
-        }
-
-        @else if $key-type == list {
+        } @else if $key-type == list {
             @include define-icon-multiple($icon, $val);
         }
     }

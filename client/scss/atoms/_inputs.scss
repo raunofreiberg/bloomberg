@@ -1,20 +1,20 @@
 .input__field {
-  width: 304px;
-  height: 55px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  display: block;
-  margin: 16px auto;
-  padding: 16px;
-  transition: all 200ms ease;
+    width: 304px;
+    height: 55px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: block;
+    margin: 16px auto;
+    padding: 16px;
+    transition: all 200ms ease;
 
-  &:focus {
-    border: 1px solid #4967e2;
-    outline: 0;
-    box-shadow: 0 2px 4px 0 rgba(73, 103, 226, 0.18);
-  }
+    &:focus {
+        border: 1px solid #4967e2;
+        outline: 0;
+        box-shadow: 0 2px 4px 0 rgba(73, 103, 226, 0.18);
+    }
 }
 
 input::-webkit-input-placeholder {
-  color: #ddd;
+    color: #ddd;
 }

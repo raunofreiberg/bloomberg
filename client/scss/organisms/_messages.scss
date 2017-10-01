@@ -1,142 +1,142 @@
 .conversation {
-  padding: 0 48px;
-  height: 90vh;
-  overflow: scroll;
+    padding: 0 48px;
+    height: 90vh;
+    overflow: scroll;
 
-  &__actions {
-    width: 100%;
-    bottom: 90px;
-    position: fixed;
-    margin: 0 auto;
+    &__actions {
+        width: 100%;
+        bottom: 90px;
+        position: fixed;
+        margin: 0 auto;
 
-    &-msg {
-      width: 660px;
-      border: none;
-      border-bottom: 3px solid $color-blue;
-      border-radius: 0;
-      margin: 0;
-      padding: 8px 0;
+        &-msg {
+            width: 660px;
+            border: none;
+            border-bottom: 3px solid $color-blue;
+            border-radius: 0;
+            margin: 0;
+            padding: 8px 0;
 
-      &:focus {
-        outline: 0;
-      }
+            &:focus {
+                outline: 0;
+            }
+        }
     }
-  }
 }
 
 .messages {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-    height: 0;
-    visibility: hidden;
-  }
-
-  &:first-of-type {
-    margin-top: 88px;
-  }
-
-  &--received {
-    position: relative;
-
-    &:first-child {
-      .message {
-        border-top-left-radius: 15px;
-      }
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+        height: 0;
+        visibility: hidden;
     }
 
-    &:last-child {
-      .message {
-        border-bottom-left-radius: 15px;
-      }
+    &:first-of-type {
+        margin-top: 88px;
     }
 
-    .message {
-      background: #e2e2e2;
-      border-bottom-left-radius: 5px;
-      border-top-left-radius: 5px;
+    &--received {
+        position: relative;
+
+        &:first-child {
+            .message {
+                border-top-left-radius: 15px;
+            }
+        }
+
+        &:last-child {
+            .message {
+                border-bottom-left-radius: 15px;
+            }
+        }
+
+        .message {
+            background: #e2e2e2;
+            border-bottom-left-radius: 5px;
+            border-top-left-radius: 5px;
+        }
+
+        &__avatar {
+            border-radius: 50%;
+            margin-right: 16px;
+            width: 35px;
+            background: #ff8b8b;
+            display: inline-block;
+            text-align: center;
+            color: rgb(255, 255, 255);
+            font-size: 18px;
+            line-height: 35px;
+        }
     }
 
-    &__avatar {
-      border-radius: 50%;
-      margin-right: 16px;
-      width: 35px;
-      background: #ff8b8b;
-      display: inline-block;
-      text-align: center;
-      color: rgb(255, 255, 255);
-      font-size: 18px;
-      line-height: 35px;
+    &--sent {
+        .message {
+            float: right;
+            background-color: $color-blue;
+            color: #fff;
+            border-bottom-right-radius: 5px;
+            border-top-right-radius: 5px;
+
+            &:first-child {
+                border-top-right-radius: 15px;
+            }
+
+            &:last-child {
+                border-bottom-right-radius: 15px;
+            }
+        }
     }
-  }
 
-  &--sent {
-    .message {
-      float: right;
-      background-color: $color-blue;
-      color: #fff;
-      border-bottom-right-radius: 5px;
-      border-top-right-radius: 5px;
+    $s-min: 20;
+    $s-max: 70;
+    $l-min: 30;
+    $l-max: 90;
 
-      &:first-child {
-        border-top-right-radius: 15px;
-      }
-
-      &:last-child {
-        border-bottom-right-radius: 15px;
-      }
+    @for $i from 1 through 500 {
+        &:nth-child(#{$i}) .messages--received__avatar {
+            background: hsl(random(360), $s-min+random($s-max+-$s-min), $l-min+random($l-max+-$l-min));
+        }
     }
-  }
-
-  $s-min: 20;
-  $s-max: 70;
-  $l-min: 30;
-  $l-max: 90;
-
-  @for $i from 1 through 100 {
-    &:nth-child(#{$i}) .messages--received__avatar {
-      background: hsl(random(360), $s-min+random($s-max+-$s-min), $l-min+random($l-max+-$l-min));
-    }
-  }
 }
 
 .message {
-  display: inline-block;
-  margin-bottom: 2px;
-  clear: both;
-  padding: 7px 13px;
-  font-size: 14px;
-  border-radius: 15px;
-  line-height: 1.4;
-  max-width: 500px;
-  animation: slideUp 100ms cubic-bezier(.4, 0, .2, 1);
+    display: inline-block;
+    margin-bottom: 2px;
+    clear: both;
+    padding: 7px 13px;
+    font-size: 14px;
+    border-radius: 15px;
+    line-height: 1.4;
+    max-width: 500px;
+    animation: slideUp 100ms cubic-bezier(.4, 0, .2, 1);
 
-  &:last-child {
-    animation: slideUpAndRight 100ms cubic-bezier(.4, 0, .2, 1);
-  }
+    &:last-child {
+        animation: slideUpAndRight 100ms cubic-bezier(.4, 0, .2, 1);
+    }
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(44px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+    from {
+        opacity: 0;
+        transform: translateY(44px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 @keyframes slideUpAndRight {
-  from {
-    transform: translateX(-100px) translateY(44px);
-  }
-  to {
-    transform: none;
-  }
+    from {
+        transform: translateX(-100px) translateY(44px);
+    }
+    to {
+        transform: none;
+    }
 }
 
 

@@ -54,6 +54,7 @@
     "serve:prod": "node server/main.js",
     "serve:dev": "npm run serve:static",
     "lint": "eslint client/js --ext .jsx --ext .js && eslint server",
+    "stylelint": "cd client/scss/ && stylelint '**/*.scss'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run build:dev & npm run serve:dev",
     "deploy": "npm run build:prod&&gh-pages -d build"
@@ -65,6 +66,8 @@
     "eslint-import-resolver-webpack": "0.8.1",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jsx-a11y": "4.0.0",
-    "eslint-plugin-react": "6.10.3"
+    "eslint-plugin-react": "6.10.3",
+    "stylelint": "^8.1.1",
+    "stylelint-config-standard": "^17.0.0"
   }
 }

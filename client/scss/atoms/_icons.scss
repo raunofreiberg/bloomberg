@@ -1,16 +1,16 @@
 @import '../mixins/icons';
 
 $icons-definitions: (
-    'arrow': ('width': 24),
+        'arrow': ('width': 24),
 );
 
 i.icon {
-  position: relative;
-  display: inline-block;
-  background-repeat: no-repeat;
-  background-position: center;
-  vertical-align: middle;
-  transition: all 0.2s ease-in-out;
+    position: relative;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    transition: all 0.2s ease-in-out;
 
-  @include define-icons($icons-definitions);
+    @include define-icons($icons-definitions);
 }
