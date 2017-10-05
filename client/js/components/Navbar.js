@@ -1,12 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {fetchMessages} from '../ducks/messages';
-import {logUserOut} from "../ducks/user";
-
+import { fetchMessages } from '../ducks/messages';
+import { logUserOut } from "../ducks/user";
 
 class Navbar extends React.Component {
+    static PropTypes = {
+        isAuthorized: PropTypes.bool.isRequired,
+        user: PropTypes.shape({
+            displayName: PropTypes.string,
+        }).isRequired,
+        onLogout: PropTypes.func.isRequired,
+        onFetch: PropTypes.func.isRequired,
+    };
 
     componentDidMount() {
         this.props.onFetch();

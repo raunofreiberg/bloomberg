@@ -1,11 +1,12 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-@import "colors";
+@import "variables";
 
 @import "atoms/icons";
 @import "atoms/buttons";
 @import "atoms/inputs";
 @import "atoms/navbar";
+@import "atoms/alerts";
 
 @import "molecules/table";
 

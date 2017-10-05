@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import {createUser} from '../ducks/user';
+import { createUser } from '../ducks/user';
 
 class Signup extends React.Component {
     static propTypes = {
@@ -45,9 +45,9 @@ class Signup extends React.Component {
         return (
             <div>
                 <h1 className="index__heading">Signup</h1>
-                <input type="text" placeholder="Email" onChange={this.setEmail} className="input__field"/>
-                <input type="text" placeholder="Display Name" onChange={this.setUsername} className="input__field"/>
-                <input type="password" placeholder="Password" onChange={this.setPassword} className="input__field"/>
+                <input type="text" placeholder="Email" onChange={this.setEmail} className="input__field" />
+                <input type="text" placeholder="Display Name" onChange={this.setUsername} className="input__field" />
+                <input type="password" placeholder="Password" onChange={this.setPassword} className="input__field" />
                 <button className="btn btn--primary" onClick={() => this.createUser()}>Sign up</button>
                 <Link to="/" className="btn btn--secondary">Login</Link>
             </div>

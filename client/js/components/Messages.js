@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { LocalForm, Control, Errors } from 'react-redux-form';
+import Login from './Login';
 
 import { fetchMessages, sendMessage } from '../ducks/messages';
 import { loginUser } from '../ducks/user';
@@ -52,29 +51,7 @@ class Messages extends React.Component {
 
     login = (values) => {
         const { email, password } = values;
-        this.props.onLogin(email, password);
-    };
-
-    renderLogin = () => {
-        return (
-            <LocalForm onSubmit={values => this.login(values)}>
-                <h1 className="index__heading">Login</h1>
-                <Control.text
-                    model=".email"
-                    className="input__field"
-                    type="email"
-                    placeholder="Email"
-                />
-                <Control.text
-                    model=".password"
-                    className="input__field"
-                    placeholder="Password"
-                    type="password"
-                />
-                <button className="btn btn--primary login" type="submit">Login</button>
-                <Link to="/signup" className="btn btn-block btn--secondary">Sign up</Link>
-            </LocalForm>
-        );
+        return this.props.onLogin(email, password);
     };
 
     renderMessages = (messages) => {
@@ -95,7 +72,12 @@ class Messages extends React.Component {
                             </div>
                     ))
                 }
-                <div ref={(el) => { this.messagesEnd = el; }} style={{marginTop: '70px'}}></div>
+                <div
+                    ref={(el) => {
+                        this.messagesEnd = el;
+                    }}
+                    style={{ marginTop: '70px' }}
+                />
                 <form onSubmit={this.sendMessage} className="conversation__actions">
                     <input
                         type="text"
@@ -120,9 +102,7 @@ class Messages extends React.Component {
             );
         } else if (!this.props.isAuthorized && !this.props.isLoading) {
             return (
-                <div>
-                    {this.renderLogin()}
-                </div>
+                <Login onSubmit={this.login} />
             );
         } else if (this.props.isAuthorized) {
             return (

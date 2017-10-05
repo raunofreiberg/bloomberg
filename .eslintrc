@@ -28,5 +28,6 @@
 
         // Show TODOs and FIXMEs as warnings
         "no-warning-comments": ["warn", {"location": "anywhere"}],
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     },
 }

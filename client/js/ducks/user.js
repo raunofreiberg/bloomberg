@@ -1,4 +1,6 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
+import { SubmissionError } from 'redux-form';
+
 import firebase from '../config';
 import history from '../history';
 
@@ -56,8 +58,7 @@ export const loginUser = (username, password) => async (dispatch) => {
             .signInWithEmailAndPassword(username, password);
         dispatch(setAuthorized(true));
     } catch (err) {
-        dispatch(setAuthorized(false));
-        console.log(err); // todo: error handling
+        throw new SubmissionError({ _error: err.message });
     }
 };
 
