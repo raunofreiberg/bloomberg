@@ -5,7 +5,7 @@ const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
-// The src/ dir
+// The client/ dir
 const app_root = path.resolve(__dirname, '..');
 const styles_root = path.resolve(app_root, 'scss');
 
@@ -15,7 +15,7 @@ const styles_out_template = '[name].css';
 
 function makeConfig(options) {
     const output = {
-        path: path.resolve(app_root, '../../build'),
+        path: path.resolve(app_root, '../build'),
         filename: js_out_template,
         publicPath: options.publicPath,
         library: 'bloomfield',
