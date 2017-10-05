@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { LocalForm, Control, Errors } from 'react-redux-form';
+
 import { fetchMessages, sendMessage } from '../ducks/messages';
 import { loginUser } from '../ducks/user';
 
@@ -28,8 +30,6 @@ class Messages extends React.Component {
 
         this.state = {
             messageInputValue: '',
-            username: '',
-            password: '',
         };
     }
 
@@ -37,8 +37,6 @@ class Messages extends React.Component {
         this.props.onFetch();
     }
 
-    setUsername = e => this.setState({ username: e.target.value });
-    setPassword = e => this.setState({ password: e.target.value });
     setMessageValue = e => this.setState({ messageInputValue: e.target.value });
 
     scrollToBottom = () => {
@@ -49,22 +47,33 @@ class Messages extends React.Component {
     sendMessage = (e) => {
         e.preventDefault();
         this.props.onSend(this.state.messageInputValue, this.props.user);
-        this.setState({messageInputValue: ''});
+        this.setState({ messageInputValue: '' });
     };
 
-    login = () => {
-        this.props.onLogin(this.state.username, this.state.password);
+    login = (values) => {
+        const { email, password } = values;
+        this.props.onLogin(email, password);
     };
 
     renderLogin = () => {
         return (
-            <div>
+            <LocalForm onSubmit={values => this.login(values)}>
                 <h1 className="index__heading">Login</h1>
-                <input type="text" placeholder="Email" className="input__field" onChange={this.setUsername} />
-                <input type="password" placeholder="Password" className="input__field" onChange={this.setPassword} />
-                <button className="btn btn--primary login" onClick={this.login}>Login</button>
+                <Control.text
+                    model=".email"
+                    className="input__field"
+                    type="email"
+                    placeholder="Email"
+                />
+                <Control.text
+                    model=".password"
+                    className="input__field"
+                    placeholder="Password"
+                    type="password"
+                />
+                <button className="btn btn--primary login" type="submit">Login</button>
                 <Link to="/signup" className="btn btn-block btn--secondary">Sign up</Link>
-            </div>
+            </LocalForm>
         );
     };
 
@@ -86,7 +95,7 @@ class Messages extends React.Component {
                             </div>
                     ))
                 }
-                <div ref={(el) => {this.messagesEnd = el;}} style={{marginTop: '70px'}}></div>
+                <div ref={(el) => { this.messagesEnd = el; }} style={{marginTop: '70px'}}></div>
                 <form onSubmit={this.sendMessage} className="conversation__actions">
                     <input
                         type="text"
@@ -97,7 +106,7 @@ class Messages extends React.Component {
                     />
                     {this.state.messageInputValue !== '' ?
                         <button type="submit">
-                            <i className="icon icon--arrow"></i>
+                            <i className="icon icon--arrow" />
                         </button> : ''}
                 </form>
             </div>
@@ -119,8 +128,6 @@ class Messages extends React.Component {
             return (
                 this.renderMessages(this.props.messages)
             );
-        } else {
-            return null;
         }
     }
 }

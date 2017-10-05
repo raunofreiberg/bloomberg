@@ -1,5 +1,4 @@
-import React from 'react';
-import {createStore, applyMiddleware, compose} from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 
@@ -35,4 +34,4 @@ function init() {
     initApp('react-container', store);
 }
 
-export {init}; // eslint-disable-line import/prefer-default-export
+export { init }; // eslint-disable-line import/prefer-default-export

@@ -23,12 +23,12 @@ export default function initApp(selector, store) {
                 <div>
                     <Navbar />
                     <div className="main__container">
-                        <Route exact path="/" component={Messages}/>
-                        <Route path="/signup" component={Signup}/>
+                        <Route exact path="/" component={Messages} />
+                        <Route path="/signup" component={Signup} />
                     </div>
                 </div>
             </Router>
         </Provider>,
         container,
     );
-};
+}

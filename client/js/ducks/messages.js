@@ -1,12 +1,11 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import firebase from '../config';
 
-import {setAuthorized, setUser} from './user';
+import { setAuthorized, setUser } from './user';
 
 // action types
 const SET_MESSAGES = 'SET_MESSAGES';
 const SET_LOADING = 'SET_LOADING';
-
 
 const initialState = {
     isLoading: false,

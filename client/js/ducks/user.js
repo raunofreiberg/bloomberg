@@ -43,7 +43,6 @@ export const createUser = userObj => async () => {
             .createUserWithEmailAndPassword(userObj.email, userObj.password)
             .then(user => user.updateProfile({ displayName: userObj.username }));
         history.push('/');
-
     } catch (err) {
         console.log(err); // todo: error handling
     }
