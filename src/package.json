@@ -22,6 +22,7 @@
     "file-loader": "0.10.1",
     "finalhandler": "^1.0.4",
     "firebase": "^4.4.0",
+    "flow": "^0.2.3",
     "gh-pages": "^1.0.0",
     "history": "^4.7.2",
     "node-sass": "3.13.0",
@@ -47,7 +48,7 @@
     "ws": "^3.1.0"
   },
   "scripts": {
-    "clean": "rm -rf ../dist",
+    "clean": "rm -rf ../build",
     "prebuild": "npm run clean",
     "build:dev": "webpack --config client/webpack/config.dev.js --watch --progress --profile --color",
     "build:prod": "webpack -p --config client/webpack/config.production.js --progress --profile --color",
@@ -58,7 +59,7 @@
     "stylelint": "cd client/scss/ && stylelint '**/*.scss'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run build:dev & npm run serve:dev",
-    "deploy": "npm run build:prod&&gh-pages -d build"
+    "deploy": "npm run build:prod&&gh-pages -d ../build"
   },
   "devDependencies": {
     "babel-eslint": "7.2.0",

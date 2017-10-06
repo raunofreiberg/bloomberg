@@ -50,8 +50,6 @@ class SubmitValidationForm extends Component {
     }
 }
 
-// this is the Higher Order Component I've been referring to
-// as the wrapper, and it may also be written as a @decorator
 export default reduxForm({
     form: 'login',
 })(SubmitValidationForm);
