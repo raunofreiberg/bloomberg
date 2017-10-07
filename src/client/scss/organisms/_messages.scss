@@ -1,3 +1,5 @@
+@import '../mixins/animations';
+
 .conversation {
     padding: 0 48px;
     height: 90vh;
@@ -112,23 +114,14 @@
     border-radius: 15px;
     line-height: 1.4;
     max-width: 500px;
-    animation: slideUp 100ms cubic-bezier(.4, 0, .2, 1);
+    animation: slideMessageUp 100ms cubic-bezier(.4, 0, .2, 1);
 
     &:last-child {
         animation: slideUpAndRight 100ms cubic-bezier(.4, 0, .2, 1);
     }
 }
 
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(44px);
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
+@include slideAnimation(slideMessageUp, 44px);
 
 @keyframes slideUpAndRight {
     from {

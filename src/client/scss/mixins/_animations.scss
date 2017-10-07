@@ -1,0 +1,12 @@
+@mixin slideAnimation($name, $length) {
+    @keyframes #{$name} {
+        from {
+            opacity: 0;
+            transform: translateY($length);
+        }
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+}

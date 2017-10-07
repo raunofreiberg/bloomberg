@@ -1,3 +1,5 @@
+@import '../mixins/animations';
+
 .error__block {
     display: flex;
     align-items: center;
@@ -5,4 +7,7 @@
     padding: 16px 0;
     color: $color-red;
     font-weight: bold;
+    animation: slideErrorUp 620ms cubic-bezier(0.4, 0, 0.4, 0.5)
 }
+
+@include slideAnimation(slideErrorUp, 14px);
