@@ -1,16 +1,10 @@
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15.4';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { SubmissionError } from 'redux-form';
-
-import { isAuthorized, SET_AUTHORIZED, initialState, loginUser, logUserOut, createUser } from '../ducks/user';
+import { isAuthorized, SET_AUTHORIZED, initialState, loginUser, logUserOut } from '../ducks/user';
 import { auth } from "../config";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('# Authentication -- actions', () => {
     const LOGIN_SUCCESS = {

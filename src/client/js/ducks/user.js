@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { SubmissionError } from 'redux-form';
 
-import firebase from '../config';
+import { firebase } from '../config';
 import history from '../history';
 
 export const initialState = {

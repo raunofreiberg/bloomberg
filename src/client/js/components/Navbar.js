@@ -6,13 +6,13 @@ import { fetchMessages } from '../ducks/messages';
 import { logUserOut } from "../ducks/user";
 
 class Navbar extends React.Component {
-    static PropTypes = {
-        isAuthorized: PropTypes.bool.isRequired,
+    static propTypes = {
         user: PropTypes.shape({
             displayName: PropTypes.string,
         }).isRequired,
         onLogout: PropTypes.func.isRequired,
         onFetch: PropTypes.func.isRequired,
+        isAuthorized: PropTypes.bool.isRequired,
     };
 
     componentDidMount() {
