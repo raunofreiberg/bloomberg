@@ -6,10 +6,6 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 describe('Store', () => {
-    /**
-     * @arg {Function} done - is a callback that you need to execute,
-     * If your action performing async task (e.g. request to API)
-     */
     it('dispatches setAuthorized to true', () => {
         // Create expected output of your action
         const expectedActions = {
