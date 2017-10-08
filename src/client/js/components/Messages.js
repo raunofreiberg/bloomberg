@@ -108,6 +108,8 @@ class Messages extends React.Component {
             return (
                 this.renderMessages(this.props.messages)
             );
+        } else {
+            return null;
         }
     }
 }

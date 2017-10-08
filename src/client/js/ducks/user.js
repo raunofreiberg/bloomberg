@@ -4,7 +4,7 @@ import { SubmissionError } from 'redux-form';
 import firebase from '../config';
 import history from '../history';
 
-const initialState = {
+export const initialState = {
     isAuthorized: false,
     user: {},
 };
@@ -21,7 +21,7 @@ const user = (state = initialState.user, action) => {
     }
 };
 
-const isAuthorized = (state = initialState.isAuthorized, action) => {
+export const isAuthorized = (state = initialState.isAuthorized, action) => {
     switch (action.type) {
         case SET_AUTHORIZED:
             return action.status;
