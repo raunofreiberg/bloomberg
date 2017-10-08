@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Login from './Login';
 
+import Spinner from './Spinner';
 import { fetchMessages, sendMessage } from '../ducks/messages';
 import { loginUser } from '../ducks/user';
 
@@ -36,7 +37,9 @@ class Messages extends React.Component {
         this.props.onFetch();
     }
 
-    setMessageValue = e => this.setState({ messageInputValue: e.target.value });
+    setMessageValue = e => {
+        this.setState({ messageInputValue: e.target.value })
+    };
 
     scrollToBottom = () => {
         const el = this.messagesEnd;
@@ -98,7 +101,7 @@ class Messages extends React.Component {
     render() {
         if (this.props.isLoading && this.props.isAuthorized) {
             return (
-                <div>loading</div>
+                <Spinner />
             );
         } else if (!this.props.isAuthorized && !this.props.isLoading) {
             return (
@@ -108,8 +111,6 @@ class Messages extends React.Component {
             return (
                 this.renderMessages(this.props.messages)
             );
-        } else {
-            return null;
         }
     }
 }

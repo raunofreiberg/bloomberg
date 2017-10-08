@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { firebase } from '../config';
+import firebase from '../config';
 
 import { setAuthorized, setUser } from './user';
 
