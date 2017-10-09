@@ -11,7 +11,7 @@
 - `npm run dev` for development
 
 ### Live deploy
-Build the Docker image by
+Build the Docker image
 
 - `docker build .`
 
