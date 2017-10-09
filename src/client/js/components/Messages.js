@@ -37,9 +37,7 @@ class Messages extends React.Component {
         this.props.onFetch();
     }
 
-    setMessageValue = e => {
-        this.setState({ messageInputValue: e.target.value })
-    };
+    setMessageValue = e => this.setState({ messageInputValue: e.target.value });
 
     scrollToBottom = () => {
         const el = this.messagesEnd;
@@ -63,13 +61,16 @@ class Messages extends React.Component {
             <div className="conversation">
                 {
                     Object.keys(messages).map(key => (
-                        messages[key].userId === this.props.user.uid ?
+                        messages[key].uid === this.props.user.uid ?
                             <div className="messages messages--sent" key={key}>
                                 <div className="message">{messages[key].message}</div>
                             </div>
                             : <div className="messages messages--received" key={key}>
-                                <span className="messages--received__avatar">
-                                    {messages[key].username ? messages[key].username.charAt(0) : '?'}
+                                <span
+                                    className="messages--received__avatar"
+                                    style={{ background: messages[key].hue }}
+                                >
+                                    {messages[key].displayName ? messages[key].displayName.charAt(0) : '?'}
                                 </span>
                                 <div className="message">{messages[key].message}</div>
                             </div>

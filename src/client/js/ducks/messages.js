@@ -46,12 +46,19 @@ export const fetchMessages = () => async (dispatch) => {
     try {
         await firebase.auth().onAuthStateChanged((user) => {
             if (user) {
+                const currentUser = user;
+
                 dispatch(setAuthorized(true));
-                dispatch(setUser(firebase.auth().currentUser));
+                firebase.database()
+                    .ref(`users/${user.uid}`)
+                    .on('value', (userSnapshot) => {
+                        currentUser.hue = userSnapshot.val().hue;
+                        dispatch(setUser(user));
+                    });
 
                 /*
-                we only want to setLoading for the UI once we actually
-                get past the authorization and start fetching
+                    we only want to setLoading for the UI once we actually
+                    get past the authorization and start fetching
                  */
                 dispatch(setLoading(true));
 
@@ -69,12 +76,20 @@ export const fetchMessages = () => async (dispatch) => {
     }
 };
 
-export const sendMessage = message => async () => {
+/**
+ * Send a message to Firebase.
+ * @param {string} message
+ * @param {string} displayName
+ * @param {string} uid
+ * @param {string} hue - The users' avatar color hue (rgb)
+ */
+export const sendMessage = (message, { displayName, uid, hue }) => async () => {
     try {
         const msg = {
             message,
-            username: firebase.auth().currentUser.displayName,
-            userId: firebase.auth().currentUser.uid,
+            displayName,
+            uid,
+            hue,
         };
 
         const msgRef = await

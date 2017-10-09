@@ -15,7 +15,7 @@ class Signup extends React.Component {
 
         this.state = {
             email: '',
-            username: '',
+            displayName: '',
             password: '',
         };
     }
@@ -29,14 +29,16 @@ class Signup extends React.Component {
     };
 
     setUsername = (e) => {
-        this.setState({ username: e.target.value });
+        this.setState({ displayName: e.target.value });
     };
 
     createUser = () => {
+        const hue = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
         const user = {
             email: this.state.email,
-            username: this.state.username,
+            displayName: this.state.displayName,
             password: this.state.password,
+            hue,
         };
         this.props.onCreate(user);
     };

@@ -38,13 +38,27 @@ const userReducer = combineReducers({
 export const setUser = user => ({ type: SET_USER, user });
 export const setAuthorized = status => ({ type: SET_AUTHORIZED, status });
 
-export const createUser = userObj => async () => {
+/**
+ * Create a Firebase username with email & password.
+ * @param {string} email
+ * @param {string} displayName
+ * @param {string} password
+ * @param {string} hue - The users' avatar color hue (rgb)
+ */
+export const createUser = ({ email, displayName, password, hue }) => async () => {
     try {
-        await firebase
+        const createdUser = await firebase
             .auth()
-            .createUserWithEmailAndPassword(userObj.email, userObj.password)
-            .then(user => user.updateProfile({ displayName: userObj.username }));
-        history.push('/');
+            .createUserWithEmailAndPassword(email, password);
+
+        await createdUser.updateProfile({ displayName });
+        await firebase.database().ref(`users/${createdUser.uid}`).set({
+            email,
+            displayName,
+            password,
+            hue,
+        });
+        await history.push('/');
     } catch (err) {
         console.log(err); // todo: error handling
     }
