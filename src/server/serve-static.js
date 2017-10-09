@@ -10,4 +10,4 @@ const server = http.createServer((req, res) => {
     handleStaticServe(req, res, done);
 });
 
-server.listen("8007");
+server.listen(process.env.PORT || 3000);
