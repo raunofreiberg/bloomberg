@@ -6,7 +6,7 @@ import { Router, Route } from 'react-router-dom';
 import history from './history';
 import '../scss/main.scss';
 
-import Messages from './components/Messages';
+import Messages from './components/Chatroom';
 import Signup from './components/Signup';
 import Navbar from './components/Navbar';
 

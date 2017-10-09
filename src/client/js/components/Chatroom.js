@@ -7,7 +7,7 @@ import Spinner from './Spinner';
 import { fetchMessages, sendMessage } from '../ducks/messages';
 import { loginUser } from '../ducks/user';
 
-class Messages extends React.Component {
+class Chatroom extends React.Component {
     static propTypes = {
         messages: PropTypes.shape({
             message: PropTypes.string,
@@ -132,6 +132,6 @@ const mapDispatchToProps = dispatch => ({
 const MessagesConnector = connect(
     mapStateToProps,
     mapDispatchToProps,
-)(Messages);
+)(Chatroom);
 
 export default MessagesConnector;
