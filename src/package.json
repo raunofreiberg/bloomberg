@@ -61,6 +61,9 @@
     "dev": "npm run build:dev & npm run serve:dev",
     "deploy": "npm run build:prod&&gh-pages -d ../build"
   },
+  "optionalDependencies": {
+    "fsevents": "*"
+  },
   "devDependencies": {
     "babel-eslint": "7.2.0",
     "babel-jest": "^21.2.0",

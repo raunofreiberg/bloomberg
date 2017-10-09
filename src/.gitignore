@@ -1,6 +1,6 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
-src/node_modules
+/node_modules
 
 /coverage
 

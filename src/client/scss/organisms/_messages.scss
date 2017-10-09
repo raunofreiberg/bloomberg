@@ -115,10 +115,6 @@
     line-height: 1.4;
     max-width: 500px;
     animation: slideMessageUp 100ms cubic-bezier(.4, 0, .2, 1);
-
-    &:last-child {
-        animation: slideUpAndRight 100ms cubic-bezier(.4, 0, .2, 1);
-    }
 }
 
 @include slideAnimation(slideMessageUp, 44px);
