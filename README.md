@@ -10,7 +10,7 @@
 - `npm i` under `src`
 - `npm run dev` for development
 
-### Live deploy
+### Docker
 Build the Docker image
 
 - `docker build .`
