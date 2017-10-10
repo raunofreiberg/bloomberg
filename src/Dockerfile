@@ -9,3 +9,6 @@ COPY npm-shrinkwrap.json npm-shrinkwrap.json
 RUN npm install
 
 EXPOSE 3000
+
+# Default command to execute on build time. Can be overriden from Docker Compose files
+CMD npm run prod
