@@ -49,7 +49,7 @@
     "ws": "^3.2.0"
   },
   "scripts": {
-    "clean": "rm -rf ../build",
+    "clean": "rm -rf ./build",
     "prebuild": "npm run clean",
     "build:dev": "webpack --config client/webpack/config.dev.js --watch --progress --profile --color",
     "build:prod": "webpack -p --config client/webpack/config.production.js --progress --profile --color",
