@@ -25,12 +25,8 @@ class Chatroom extends React.Component {
         onLogin: PropTypes.func.isRequired,
     };
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            messageInputValue: '',
-        };
+    state = {
+        messageInputValue: '',
     }
 
     componentDidMount() {
@@ -45,9 +41,13 @@ class Chatroom extends React.Component {
     };
 
     sendMessage = (e) => {
+        const { messageInputValue } = this.state;
         e.preventDefault();
-        this.props.onSend(this.state.messageInputValue, this.props.user);
-        this.setState({ messageInputValue: '' });
+
+        if (messageInputValue.replace(/\s/g, '').length) { // if string has a length after replacing all the whitespace, post it
+            this.props.onSend(messageInputValue, this.props.user);
+            this.setState({ messageInputValue: '' });
+        }
     };
 
     login = (values) => {
