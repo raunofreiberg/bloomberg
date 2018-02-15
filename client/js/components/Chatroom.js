@@ -80,7 +80,7 @@ class Chatroom extends React.Component {
                     ref={(el) => {
                         this.messagesEnd = el;
                     }}
-                    style={{ marginTop: '70px' }}
+                    style={{ marginTop: '90px' }}
                 />
                 <form onSubmit={this.sendMessage} className="conversation__actions">
                     <input
